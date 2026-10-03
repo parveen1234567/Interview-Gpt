@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Your profile | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="page-shell">
+    <div class="page-heading">
+        <span class="eyebrow"><span class="status-dot"></span> ACCOUNT SETTINGS</span>
+        <h1>Your <span class="text-gradient">profile.</span></h1>
+        <p>Review the account details associated with your interview practice.</p>
+    </div>
+    <section class="profile-card">
+        <div class="profile-avatar" aria-hidden="true">{{ profile.name[:1] | upper }}</div>
+        <div class="profile-field">
+            <span>Full name</span>
+            <strong>{{ profile.name }}</strong>
+        </div>
+        <div class="profile-field">
+            <span>Account email</span>
+            <strong>{{ profile.email }}</strong>
+        </div>
+        <div class="profile-actions">
+            <a class="button" href="/upload">Start an interview <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="/dashboard">← Back to dashboard</a>
+        </div>
+    </section>
+
+    <section class="danger-zone">
+        <div>
+            <span class="report-overline">PERMANENT ACCOUNT ACTION</span>
+            <h2>Delete account login</h2>
+            <p>This permanently removes your login and password-reset tokens. Your interview sessions, reports, resume text, and generated PDFs will be retained but detached from your account, so they will no longer appear in your profile. This cannot be undone.</p>
+        </div>
+        {% if error %}
+        <p class="alert alert-error" role="alert">{{ error }}</p>
+        {% endif %}
+        <form action="/profile/delete" method="post" class="delete-account-form">
+            <label for="delete-password">Confirm your current password</label>
+            <input id="delete-password" type="password" name="password" autocomplete="current-password" required>
+            <label for="delete-confirmation">Type <strong>DELETE MY ACCOUNT</strong> to confirm</label>
+            <input id="delete-confirmation" type="text" name="confirmation" autocomplete="off" value="{{ confirmation or '' }}" required>
+            <button class="button button-danger" type="submit">Permanently delete login</button>
+        </form>
+    </section>
+</main>
+{% endblock %}

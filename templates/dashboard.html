@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="page-shell dashboard-shell">
+    <div class="page-heading page-heading-row">
+        <div>
+            <span class="eyebrow"><span class="status-dot"></span> YOUR INTERVIEW SPACE</span>
+            <h1>Your <span class="text-gradient">dashboard.</span></h1>
+            <p>Track your practice sessions and see how you’re progressing.</p>
+        </div>
+        <a class="button" href="/upload">Start an interview <span aria-hidden="true">→</span></a>
+    </div>
+
+    <section class="dashboard-stats">
+        <article class="dashboard-stat-card">
+            <span class="stat-icon icon-violet">↗</span>
+            <span class="stat-label">Total interviews</span>
+            <strong>{{ total_interviews }}</strong>
+            <small>Completed practice sessions</small>
+        </article>
+        <article class="dashboard-stat-card">
+            <span class="stat-icon icon-blue">CV</span>
+            <span class="stat-label">Average resume ATS score</span>
+            <strong>{{ average_ats_score }}<small>/100</small></strong>
+            <small>Resume compatibility</small>
+        </article>
+        <article class="dashboard-stat-card">
+            <span class="stat-icon icon-green">★</span>
+            <span class="stat-label">Average interview score</span>
+            <strong>{{ average_interview_score }}<small>/10</small></strong>
+            <small>Across your interviews</small>
+        </article>
+        <article class="dashboard-stat-card">
+            <span class="stat-icon icon-violet">✓</span>
+            <span class="stat-label">Highly recommended</span>
+            <strong>{{ highly_recommended }}</strong>
+            <small>Strong interview outcomes</small>
+        </article>
+    </section>
+
+    <section class="dashboard-chart-card">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">YOUR PERFORMANCE</span>
+                <h2>Resume ATS &amp; interview scores</h2>
+            </div>
+            <a href="/reports">View reports →</a>
+        </div>
+        <div class="chart-wrap"><canvas id="scoreChart" aria-label="Average resume and interview scores"></canvas></div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const chartCanvas = document.getElementById("scoreChart");
+if (chartCanvas && window.Chart) {
+    new Chart(chartCanvas, {
+        type: "bar",
+        data: {
+            labels: ["Resume ATS score", "Interview score (out of 100)"],
+            datasets: [{
+                label: "Average score",
+                data: [{{ average_ats_score }}, {{ average_interview_score * 10 }}],
+                backgroundColor: ["rgba(111, 97, 231, .78)", "rgba(77, 137, 225, .78)"],
+                borderRadius: 9,
+                maxBarThickness: 72
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, max: 100, grid: { color: "#edf0f6" } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}

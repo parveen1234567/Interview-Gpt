@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Resume ATS Score | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="page-shell ats-score-shell">
+    <div class="page-heading page-heading-row">
+        <div>
+            <span class="eyebrow"><span class="status-dot"></span> RESUME READINESS</span>
+            <h1>Your Resume <span class="text-gradient">ATS Score.</span></h1>
+            <p>A general estimate of resume readability and organization, with practical improvement ideas.</p>
+        </div>
+        <a class="button" href="/upload">Analyze another resume <span aria-hidden="true">→</span></a>
+    </div>
+
+    {% if analysis %}
+    <section class="ats-score-overview">
+        <div>
+            <span class="report-overline">LATEST RESUME ANALYSIS</span>
+            <h2>{{ analysis.candidate_name or "Candidate" }}</h2>
+            <p>This is a general ATS-readiness estimate, not a job-match score or an employer guarantee.</p>
+        </div>
+        <div class="ats-score-value">
+            <span>Resume ATS score</span>
+            <strong>{{ ats_score if ats_score is not none else "—" }}{% if ats_score is not none %}<small>/100</small>{% endif %}</strong>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if resume_improvements %}
+    <section class="overall-feedback ats-review">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">ACTION PLAN</span>
+                <h2>Ways to improve your ATS score</h2>
+            </div>
+        </div>
+        <div class="ats-table-wrap">
+            <table class="ats-improvements-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Focus area</th>
+                        <th scope="col">Recommended edit / example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in resume_improvements %}
+                    <tr>
+                        <td><span class="ats-priority">{{ item.priority }}</span></td>
+                        <td>{{ item.area }}</td>
+                        <td>{{ item.improvement }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <small>Make only truthful edits. Add target-job keywords only when they accurately describe your experience.</small>
+    </section>
+    {% endif %}
+
+    {% if resume_analysis_sections %}
+    <section class="overall-feedback ats-review">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">DETAILED REVIEW</span>
+                <h2>Full resume analysis</h2>
+            </div>
+        </div>
+        <div class="ats-table-wrap">
+            <table class="ats-analysis-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Analysis area</th>
+                        <th scope="col">Analysis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for section in resume_analysis_sections %}
+                    {% if section.area != "Prioritized improvements" %}
+                    <tr>
+                        <th scope="row">{{ section.area }}</th>
+                        <td>{{ section.details }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% if resume_improvements %}
+                    <tr>
+                        <th scope="row">Prioritized improvements</th>
+                        <td>
+                            <table class="ats-nested-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Priority</th>
+                                        <th scope="col">Focus area</th>
+                                        <th scope="col">Recommended edit / example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in resume_improvements %}
+                                    <tr>
+                                        <td><span class="ats-priority">{{ item.priority }}</span></td>
+                                        <td>{{ item.area }}</td>
+                                        <td>{{ item.improvement }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if not analysis or (not analysis.resume_feedback and ats_score is none) %}
+    <section class="empty-state">
+        <span class="empty-icon" aria-hidden="true">✦</span>
+        <h2>No resume analysis yet</h2>
+        <p>Upload a resume to get your ATS score and a table of prioritized improvements.</p>
+        <a class="button" href="/upload">Upload your resume <span aria-hidden="true">→</span></a>
+    </section>
+    {% elif not analysis.resume_feedback and ats_score is not none %}
+    <p class="alert alert-info">This older resume record has a score but no detailed analysis. Upload your resume again to generate improvement suggestions.</p>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+    @page {
+        size: A4;
+        margin: 24mm 18mm;
+    }
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        color: #26334a;
+        line-height: 1.55;
+    }
+    .topline {
+        color: #655fce;
+        font-size: 9px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    h1 {
+        margin: 8px 0 4px;
+        color: #25334a;
+        font-size: 25px;
+    }
+    .subtitle {
+        margin: 0 0 18px;
+        color: #78849a;
+    }
+    .summary {
+        width: 100%;
+        margin: 14px 0 22px;
+        border-collapse: collapse;
+    }
+    .summary td {
+        width: 50%;
+        padding: 9px 11px;
+        border: 1px solid #e5e9f1;
+    }
+    .summary .label {
+        width: 22%;
+        background: #f4f5fb;
+        color: #647087;
+        font-weight: bold;
+    }
+    h2 {
+        margin: 22px 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #e5e9f1;
+        color: #514fba;
+        font-size: 15px;
+    }
+    h3 {
+        margin: 16px 0 5px;
+        color: #303e56;
+        font-size: 11px;
+    }
+    .question-block {
+        margin-bottom: 13px;
+        padding: 10px 12px;
+        border: 1px solid #e8ebf2;
+        background: #fbfcfe;
+    }
+    .field-label {
+        margin-top: 7px;
+        color: #65718a;
+        font-size: 8px;
+        font-weight: bold;
+        letter-spacing: .5px;
+    }
+    .content {
+        margin: 3px 0 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style>
+</head>
+<body>
+<div class="topline">INTERVIEW GPT · INTERVIEW REPORT</div>
+<h1>Interview results</h1>
+<p class="subtitle">{{ report.created_at.strftime("%B %d, %Y") if report.created_at else "Completed interview" }}</p>
+
+<table class="summary">
+    <tr><td class="label">Candidate</td><td>{{ report.candidate_name or "Candidate" }}</td></tr>
+    <tr><td class="label">Questions</td><td>{{ report.total_questions or 0 }}</td></tr>
+    <tr><td class="label">Total score</td><td>{{ report.total_score or 0 }}</td></tr>
+    <tr><td class="label">Average answer</td><td>{{ "%.1f"|format(report.average_score or 0) }}/10</td></tr>
+    <tr><td class="label">Recommendation</td><td>{{ report.recommendation or "Interview completed" }}</td></tr>
+</table>
+
+{% if report.feedback %}
+<h2>Overall feedback</h2>
+<p class="content">{{ report.feedback }}</p>
+{% endif %}
+
+<h2>Question-by-question review</h2>
+{% set questions = report.questions.split('\n\n') if report.questions else [] %}
+{% set answers = report.answers.split('\n\n') if report.answers else [] %}
+{% set scores = report.scores.split('\n') if report.scores else [] %}
+{% set feedbacks = report.question_feedback.split('<<NEXT>>') if report.question_feedback else [] %}
+{% for i in range(questions|length) %}
+<div class="question-block">
+    <h3>Question {{ i + 1 }}</h3>
+    <div class="field-label">QUESTION</div>
+    <p class="content">{{ questions[i] }}</p>
+    <div class="field-label">YOUR ANSWER</div>
+    <p class="content">{{ answers[i] if i < answers|length else "No answer recorded." }}</p>
+    <div class="field-label">SCORE</div>
+    <p class="content">{{ scores[i] if i < scores|length else "0" }}/10</p>
+    <div class="field-label">AI FEEDBACK</div>
+    <p class="content">{{ feedbacks[i] if i < feedbacks|length else "No feedback available." }}</p>
+</div>
+{% else %}
+<p>No question-wise data available.</p>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="auth-layout">
+    <section class="auth-aside">
+        <span class="eyebrow"><span class="status-dot"></span> WELCOME BACK</span>
+        <h1>Good interviews start with <span class="text-gradient">good practice.</span></h1>
+        <p>Sign in to continue preparing with interviews tailored to your resume.</p>
+        <div class="aside-tip"><span class="tip-icon">✦</span><span>Your progress and interview reports are saved to your account.</span></div>
+    </section>
+    <section class="auth-card">
+        <div class="auth-card-heading">
+            <span class="auth-icon">↗</span>
+            <p class="eyebrow">YOUR ACCOUNT</p>
+            <h2>Sign in</h2>
+            <p>Enter your account details to continue.</p>
+        </div>
+        {% if message %}<p class="alert alert-success" role="status">{{ message }}</p>{% endif %}
+        {% if error %}<p class="alert alert-error" role="alert">{{ error }}</p>{% endif %}
+        <form action="/login" method="post" class="auth-form">
+            <input type="hidden" name="next" value="{{ next_path }}">
+            <label for="email">Email address</label>
+            <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <div class="password-label-row">
+                <label for="password">Password</label>
+                <a href="/forgot-password?next={{ next_path | urlencode }}">Forgot password?</a>
+            </div>
+            <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button class="button button-full" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="auth-switch">New to Interview GPT? <a href="/register?next={{ next_path | urlencode }}">Create an account</a></p>
+        <p class="privacy-note">Forgot which email you registered with? <a href="/forgot-email?next={{ next_path | urlencode }}">Get help finding it</a>.</p>
+        <p class="privacy-note">Password reset links are sent to the email address on your account.</p>
+    </section>
+</main>
+{% endblock %}

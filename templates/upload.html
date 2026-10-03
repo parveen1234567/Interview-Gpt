@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Upload your resume | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="page-shell upload-shell">
+    <div class="page-heading">
+        <span class="eyebrow"><span class="status-dot"></span> PERSONALIZED INTERVIEW PRACTICE</span>
+        <h1>Start with your <span class="text-gradient">resume.</span></h1>
+        <p>Get a resume ATS score and interview questions based on your experience.</p>
+    </div>
+
+    <section class="upload-card">
+        <div class="upload-icon" aria-hidden="true">↑</div>
+        <h2>Upload your resume</h2>
+        <p class="upload-description">Choose a PDF for an ATS score, practical resume feedback, and a personalized interview.</p>
+        {% if error %}
+            <p class="alert alert-error" role="alert">{{ error }}</p>
+        {% endif %}
+        <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+            <label class="file-picker" for="resume">
+                <span class="file-picker-icon" aria-hidden="true">PDF</span>
+                <span><strong>Select a resume PDF</strong><small>PDF format only</small></span>
+            </label>
+            <input id="resume" type="file" name="resume" accept="application/pdf,.pdf" required>
+            <button class="button button-full" type="submit">Analyze resume &amp; start <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="upload-assurance">
+            <span>✓ Resume ATS score</span>
+            <span>✓ Personal feedback</span>
+            <span>✓ Private to your account</span>
+        </div>
+        <a class="page-back-link" href="/dashboard">← Back to dashboard</a>
+    </section>
+</main>
+{% endblock %}

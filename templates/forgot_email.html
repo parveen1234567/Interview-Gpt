@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Find your account email | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="auth-layout auth-layout-compact">
+    <section class="auth-aside">
+        <span class="eyebrow"><span class="status-dot"></span> ACCOUNT HELP</span>
+        <h1>Let’s get you back to <span class="text-gradient">your account.</span></h1>
+        <p>Your account email is private, so we can’t display or send it without verifying ownership. Here are safe ways to find it.</p>
+        <div class="aside-tip"><span class="tip-icon">✉</span><span>Password reset links go to the email address used when you registered.</span></div>
+    </section>
+    <section class="auth-card">
+        <div class="auth-card-heading">
+            <span class="auth-icon">?</span>
+            <p class="eyebrow">CAN’T REMEMBER YOUR EMAIL?</p>
+            <h2>Find your account email</h2>
+            <p>Try these steps to identify the address you used.</p>
+        </div>
+        <ol class="recovery-list">
+            <li>Check the email accounts you commonly use and look for messages from Interview GPT.</li>
+            <li>Check your browser or password manager for a saved Interview GPT login.</li>
+            <li>If you still can’t find it, contact your system administrator to verify your account.</li>
+        </ol>
+        <a class="button button-full" href="/login?next={{ next_path | urlencode }}">Back to sign in <span aria-hidden="true">→</span></a>
+        <p class="auth-switch">Remember your email but not your password? <a href="/forgot-password?next={{ next_path | urlencode }}">Reset your password</a></p>
+    </section>
+</main>
+{% endblock %}

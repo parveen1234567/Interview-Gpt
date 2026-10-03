@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Interview reports | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="page-shell reports-shell">
+    <div class="page-heading page-heading-row">
+        <div>
+            <span class="eyebrow"><span class="status-dot"></span> YOUR PROGRESS</span>
+            <h1>Interview <span class="text-gradient">reports.</span></h1>
+            <p>Review past sessions, download a PDF, or remove a report.</p>
+            <a class="page-back-link" href="/dashboard">← Back to dashboard</a>
+        </div>
+        <a class="button" href="/upload">New interview <span aria-hidden="true">→</span></a>
+    </div>
+
+    {% if deleted %}
+    <p class="alert alert-success" role="status">The report was deleted.</p>
+    {% endif %}
+
+    {% if reports %}
+    <section class="report-list">
+        {% for report in reports %}
+        <article class="report-card">
+            <div class="report-card-main">
+                <div class="report-icon" aria-hidden="true">↗</div>
+                <div>
+                    <a class="report-title" href="/reports/{{ report.id }}">{{ report.candidate_name or "Interview report" }}</a>
+                    <p class="report-date">{{ report.created_at.strftime("%b %d, %Y") if report.created_at else "Date unavailable" }}</p>
+                </div>
+            </div>
+            <div class="report-stat">
+                <span>Questions</span>
+                <strong>{{ report.total_questions or 0 }}</strong>
+            </div>
+            <div class="report-stat">
+                <span>Average</span>
+                <strong>{{ "%.1f"|format(report.average_score or 0) }}<small>/10</small></strong>
+            </div>
+            <span class="recommendation-pill">{{ report.recommendation or "Completed" }}</span>
+            <div class="report-actions">
+                <a class="button button-small" href="/reports/{{ report.id }}">View report</a>
+                <a class="button button-small button-secondary" href="/reports/{{ report.id }}/pdf">PDF</a>
+                <form action="/reports/{{ report.id }}/delete" method="post" onsubmit="return confirm('Delete this interview report permanently?');">
+                    <button class="button button-small button-danger" type="submit">Delete</button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+    {% else %}
+    <section class="empty-state">
+        <span class="empty-icon" aria-hidden="true">✦</span>
+        <h2>Your reports will show up here</h2>
+        <p>Complete a personalized interview to see your scores and feedback.</p>
+        <a class="button" href="/upload">Start your first interview <span aria-hidden="true">→</span></a>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

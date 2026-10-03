@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7fb">
+    <title>{% block title %}Interview GPT | AI Interview Assistant{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=20261003-15">
+</head>
+<body>
+    <div class="site-background" aria-hidden="true"></div>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="Interview GPT home">
+            <span class="brand-mark">I</span>
+            <span>Interview <span class="brand-accent">GPT</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            {% if request.session.get("user") %}
+                <a href="/dashboard">Dashboard</a>
+                <a href="/ats-score">Resume ATS Score</a>
+                <a href="/reports">Reports</a>
+                <a href="/profile">Profile</a>
+                <a class="button button-small" href="/upload">Start interview</a>
+                <form class="logout-form" action="/logout" method="post">
+                    <button class="button button-small button-quiet" type="submit">Log out</button>
+                </form>
+            {% else %}
+                <a href="/login">Sign in</a>
+                <a class="button button-small" href="/register?next=%2Fupload">Create account</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="site-footer">
+        <span>Interview GPT</span>
+        <span>Practice with purpose. Interview with confidence.</span>
+    </footer>
+</body>
+</html>

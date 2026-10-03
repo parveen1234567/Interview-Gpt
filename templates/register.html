@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Create account | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="auth-layout">
+    <section class="auth-aside">
+        <span class="eyebrow"><span class="status-dot"></span> START YOUR NEXT CHAPTER</span>
+        <h1>Make your next interview your <span class="text-gradient">best one yet.</span></h1>
+        <p>Create an account to get a personalized practice interview and feedback shaped around your experience.</p>
+        <div class="aside-tip"><span class="tip-icon">✓</span><span>One account keeps your practice sessions and reports together.</span></div>
+    </section>
+    <section class="auth-card">
+        <div class="auth-card-heading">
+            <span class="auth-icon">✦</span>
+            <p class="eyebrow">GET STARTED</p>
+            <h2>Create your account</h2>
+            <p>It only takes a moment to get started.</p>
+        </div>
+        {% if error %}<p class="alert alert-error" role="alert">{{ error }}</p>{% endif %}
+        <form action="/register" method="post" class="auth-form">
+            <input type="hidden" name="next" value="{{ next_path }}">
+            <label for="name">Your name</label>
+            <input id="name" type="text" name="name" maxlength="100" placeholder="Your full name" autocomplete="name" required>
+            <label for="email">Email address</label>
+            <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <label for="password">Create a password</label>
+            <input id="password" type="password" name="password" minlength="12" maxlength="72" placeholder="At least 12 characters" autocomplete="new-password" required>
+            <small>Use at least 12 characters (maximum 72 UTF-8 bytes).</small>
+            <button class="button button-full" type="submit">Create account <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="/login?next={{ next_path | urlencode }}">Sign in</a></p>
+    </section>
+</main>
+{% endblock %}

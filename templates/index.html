@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Interview GPT | AI Interview & Hiring Assistant{% endblock %}
+
+{% block content %}
+<main class="home-main">
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="eyebrow"><span class="status-dot"></span> YOUR NEXT INTERVIEW STARTS HERE</span>
+            <h1>Turn your resume into your <span class="text-gradient">next opportunity.</span></h1>
+            <p class="hero-description">
+                Get a personalized, AI-powered interview built around your experience.
+                Practice at your pace and get useful feedback after every answer.
+            </p>
+            <div class="hero-actions">
+                {% if is_authenticated %}
+                    <a class="button" href="/upload">Start your interview <span aria-hidden="true">→</span></a>
+                    <a class="button button-secondary" href="/dashboard">Open dashboard</a>
+                {% else %}
+                    <a class="button" href="/register?next=%2Fupload">Create your free account <span aria-hidden="true">→</span></a>
+                    <a class="button button-secondary" href="/login?next=%2Fupload">I already have an account</a>
+                {% endif %}
+            </div>
+            {% if not is_authenticated %}
+            <p class="hero-note">New here? Create an account. Already registered? Sign in. Forgot your password? <a href="/forgot-password">Reset it by email</a>.</p>
+            {% else %}
+            <p class="hero-note">Welcome back, {{ user.name }}. Your next practice session is one click away.</p>
+            {% endif %}
+        </div>
+
+        <div class="hero-visual" aria-label="Interview preparation preview">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="preview-card">
+                <div class="preview-topline">
+                    <span class="preview-label"><span class="status-dot"></span> INTERVIEW PREVIEW</span>
+                    <span class="preview-counter">01 / 15</span>
+                </div>
+                <div class="preview-avatar">AI</div>
+                <p class="preview-kicker">YOUR PERSONAL AI INTERVIEWER</p>
+                <h2>Let’s talk about your experience.</h2>
+                <p class="preview-question">“Tell me about a project on your resume that you’re especially proud of.”</p>
+                <div class="preview-bottom">
+                    <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                    <span>Questions tailored to you</span>
+                </div>
+            </div>
+            <div class="floating-badge"><span>✦</span> Resume-based questions</div>
+        </div>
+    </section>
+
+    <section class="features" aria-label="How Interview GPT helps">
+        <article class="feature-card">
+            <span class="feature-icon icon-violet">01</span>
+            <h3>Resume ATS scoring</h3>
+            <p>See an ATS readability score and get practical, truthful improvements for your resume.</p>
+        </article>
+        <article class="feature-card">
+            <span class="feature-icon icon-blue">02</span>
+            <h3>Practice in your own time</h3>
+            <p>Work through realistic questions at a pace that suits you.</p>
+        </article>
+        <article class="feature-card">
+            <span class="feature-icon icon-green">03</span>
+            <h3>Get actionable feedback</h3>
+            <p>Review your answers, scores, and interview report in one place.</p>
+        </article>
+    </section>
+</main>
+{% endblock %}

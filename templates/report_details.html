@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Interview report | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="page-shell report-detail-shell">
+    <div class="page-heading page-heading-row">
+        <div>
+            <span class="eyebrow"><span class="status-dot"></span> INTERVIEW RESULTS</span>
+            <h1>Your interview <span class="text-gradient">report.</span></h1>
+            <p>{{ report.created_at.strftime("%B %d, %Y") if report.created_at else "Completed interview" }}</p>
+        </div>
+        <div class="page-actions">
+            <a class="button button-secondary" href="/reports">← All reports</a>
+            <a class="button" href="/reports/{{ report.id }}/pdf">Download PDF <span aria-hidden="true">↓</span></a>
+        </div>
+    </div>
+
+    <section class="summary-grid" aria-label="Interview summary">
+        <article class="summary-card">
+            <span>Questions answered</span>
+            <strong>{{ report.total_questions or 0 }}</strong>
+        </article>
+        <article class="summary-card">
+            <span>Total score</span>
+            <strong>{{ report.total_score or 0 }}</strong>
+        </article>
+        <article class="summary-card summary-card-highlight">
+            <span>Average answer</span>
+            <strong>{{ "%.1f"|format(report.average_score or 0) }}<small>/10</small></strong>
+        </article>
+    </section>
+
+    <section class="report-recommendation">
+        <span class="recommendation-check" aria-hidden="true">✓</span>
+        <div>
+            <span class="report-overline">OVERALL RECOMMENDATION</span>
+            <h2>{{ report.recommendation or "Interview completed" }}</h2>
+        </div>
+    </section>
+
+    {% if report.feedback %}
+    <section class="overall-feedback">
+        <h2>Overall feedback</h2>
+        <p>{{ report.feedback }}</p>
+    </section>
+    {% endif %}
+
+    <section class="question-results">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">DETAILED REVIEW</span>
+                <h2>Question-by-question feedback</h2>
+            </div>
+            <span class="question-count">{{ question_wise_data|length }} questions</span>
+        </div>
+        {% if question_wise_data %}
+            {% for item in question_wise_data %}
+            <article class="question-result-card">
+                <div class="question-result-heading">
+                    <span class="question-index">QUESTION {{ item.number }}</span>
+                    <span class="question-score">{{ item.score }}/10</span>
+                </div>
+                <h3>{{ item.question or "Question not available" }}</h3>
+                <div class="answer-feedback-grid">
+                    <div class="answer-panel">
+                        <span class="report-overline">YOUR ANSWER</span>
+                        <p>{{ item.answer or "No answer recorded." }}</p>
+                    </div>
+                    <div class="feedback-panel">
+                        <span class="report-overline">AI FEEDBACK</span>
+                        <p>{{ item.feedback or "No feedback available." }}</p>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state"><p>No question-wise data available for this report.</p></div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

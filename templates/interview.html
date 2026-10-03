@@ -1,0 +1,698 @@
+{% extends "base.html" %}
+
+{% block title %}AI Interview | Interview GPT{% endblock %}
+
+{% block content %}
+<main class="interview-shell">
+<div class="interview-card">
+    <div class="interview-heading">
+        <div>
+            <span class="eyebrow"><span class="status-dot"></span> PERSONALIZED PRACTICE SESSION</span>
+            <h1>AI Interview</h1>
+            {% if ats_score is not none %}
+            <p class="ats-score-chip">Resume ATS score <strong>{{ ats_score }}/100</strong></p>
+            {% endif %}
+        </div>
+        <a class="button button-small button-secondary" href="/dashboard">Exit interview</a>
+    </div>
+
+    {% if resume_feedback %}
+    <details class="ats-feedback-card">
+        <summary>Resume ATS review and ways to improve your score</summary>
+        {% if resume_improvements %}
+        <div class="ats-table-wrap">
+            <table class="ats-improvements-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Focus area</th>
+                        <th scope="col">Recommended edit / example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in resume_improvements %}
+                    <tr>
+                        <td><span class="ats-priority">{{ item.priority }}</span></td>
+                        <td>{{ item.area }}</td>
+                        <td>{{ item.improvement }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        <details class="ats-full-review">
+            <summary>View full resume analysis</summary>
+            <div class="ats-table-wrap">
+                <table class="ats-analysis-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Analysis area</th>
+                            <th scope="col">Full analysis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for section in resume_analysis_sections %}
+                        {% if section.area != "Prioritized improvements" %}
+                        <tr>
+                            <th scope="row">{{ section.area }}</th>
+                            <td>{{ section.details }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        {% if resume_improvements %}
+                        <tr>
+                            <th scope="row">Prioritized improvements</th>
+                            <td>
+                                <table class="ats-nested-table">
+                                    <thead>
+                                        <tr><th>Priority</th><th>Focus area</th><th>Recommended edit / example</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in resume_improvements %}
+                                        <tr>
+                                            <td><span class="ats-priority">{{ item.priority }}</span></td>
+                                            <td>{{ item.area }}</td>
+                                            <td>{{ item.improvement }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <p class="ats-truth-note">Make only truthful edits. Add keywords from a target job description only when they accurately describe your experience.</p>
+    </details>
+    {% endif %}
+
+    <!-- Question counter -->
+
+    <div id="questionNumber">
+        Question 1 of 15
+    </div>
+
+
+    <!-- Progress -->
+
+    <div class="progress">
+
+        <span id="progressText">
+            1 / 15
+        </span>
+
+    </div>
+
+
+    <!-- Current question -->
+
+    <div id="question">
+        Loading question...
+    </div>
+
+
+    <!-- Candidate answer -->
+
+    <textarea
+        class="interview-answer"
+        id="answer"
+        placeholder="Write your answer here..."
+    ></textarea>
+
+
+    <br>
+
+
+    <!-- Submit -->
+
+    <button
+        class="button"
+        id="submitBtn"
+        type="button"
+        onclick="submitAnswer()"
+    >
+        Submit Answer
+    </button>
+
+
+    <!-- Loading -->
+
+    <div id="loading">
+        Evaluating your answer...
+    </div>
+
+
+    <!-- Evaluation -->
+
+    <div id="evaluation"></div>
+
+
+    <!-- Score -->
+
+    <div id="score"></div>
+
+
+    <!-- Completed -->
+
+    <div id="complete">
+
+        <h2>Interview Completed</h2>
+
+        <p>
+            You have completed all 15 interview questions.
+        </p>
+
+        <button
+            class="button"
+            type="button"
+            onclick="viewReport()"
+        >
+            View Report
+        </button>
+
+    </div>
+</div>
+</main>
+
+
+<script>
+
+
+// =========================================================
+// INTERVIEW SETTINGS
+// =========================================================
+
+const MAX_QUESTIONS = 15;
+const interviewId =
+    new URLSearchParams(window.location.search).get("interview_id");
+
+
+// =========================================================
+// INTERVIEW STATE
+// =========================================================
+
+let currentQuestion = "";
+
+let questionNumber = 1;
+
+let interviewCompleted = false;
+
+let submitting = false;
+
+
+// =========================================================
+// START INTERVIEW
+// =========================================================
+
+async function startInterview() {
+
+    try {
+
+        if (!interviewId) {
+
+            throw new Error("Interview session is missing. Upload a resume to start.");
+
+        }
+
+        const response = await fetch(
+            "/interview/start?interview_id=" +
+                encodeURIComponent(interviewId),
+            {
+                method: "GET",
+                cache: "no-store"
+            }
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to start interview"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        currentQuestion =
+            data.question || "";
+
+
+        // -------------------------------------------------
+        // Backend already says completed
+        // -------------------------------------------------
+
+        if (
+            currentQuestion === "Interview Completed"
+        ) {
+
+            finishInterview();
+
+            return;
+
+        }
+
+
+        // -------------------------------------------------
+        // Show first question
+        // -------------------------------------------------
+
+        questionNumber =
+            data.question_number || 1;
+
+        showQuestion();
+
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "question"
+        ).innerText =
+            "Unable to load interview question.";
+
+    }
+
+}
+
+
+// =========================================================
+// SHOW QUESTION
+// =========================================================
+
+function showQuestion() {
+
+    document.getElementById(
+        "questionNumber"
+    ).innerText =
+        "Question " +
+        questionNumber +
+        " of " +
+        MAX_QUESTIONS;
+
+
+    document.getElementById(
+        "progressText"
+    ).innerText =
+        questionNumber +
+        " / " +
+        MAX_QUESTIONS;
+
+    document.getElementById(
+        "progressText"
+    ).style.width =
+        Math.min(questionNumber / MAX_QUESTIONS * 100, 100) + "%";
+
+
+    document.getElementById(
+        "question"
+    ).innerText =
+        currentQuestion;
+
+
+    document.getElementById(
+        "answer"
+    ).value = "";
+
+
+    document.getElementById(
+        "answer"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "submitBtn"
+    ).style.display = "inline-block";
+
+
+    document.getElementById(
+        "submitBtn"
+    ).disabled = false;
+
+}
+
+
+// =========================================================
+// SUBMIT ANSWER
+// =========================================================
+
+async function submitAnswer() {
+
+
+    // -----------------------------------------------------
+    // Prevent submitting after completion
+    // -----------------------------------------------------
+
+    if (interviewCompleted) {
+
+        return;
+
+    }
+
+
+    // -----------------------------------------------------
+    // Prevent double click
+    // -----------------------------------------------------
+
+    if (submitting) {
+
+        return;
+
+    }
+
+
+    const answer =
+        document
+            .getElementById("answer")
+            .value
+            .trim();
+
+
+    // -----------------------------------------------------
+    // Empty answer
+    // -----------------------------------------------------
+
+    if (!answer) {
+
+        alert(
+            "Please enter your answer."
+        );
+
+        return;
+
+    }
+
+
+    // -----------------------------------------------------
+    // Store submitting state
+    // -----------------------------------------------------
+
+    submitting = true;
+
+
+    document.getElementById(
+        "submitBtn"
+    ).disabled = true;
+
+
+    document.getElementById(
+        "loading"
+    ).style.display = "block";
+
+
+    try {
+
+
+        const response = await fetch(
+
+            "/interview/answer",
+
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    interview_id:
+                        interviewId,
+
+                    question:
+                        currentQuestion,
+
+                    answer:
+                        answer
+
+                })
+
+            }
+
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server returned " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Interview response:",
+            data
+        );
+
+
+        // =================================================
+        // SHOW EVALUATION
+        // =================================================
+
+        document.getElementById(
+            "evaluation"
+        ).innerText =
+            data.evaluation || "";
+
+
+        document.getElementById(
+            "score"
+        ).innerText =
+            "Score: " +
+            (data.score ?? 0) +
+            "/10";
+
+
+        // =================================================
+        // IMPORTANT:
+        // CHECK BACKEND COMPLETION FLAG
+        // =================================================
+
+        if (
+            data.completed === true
+        ) {
+
+            finishInterview();
+
+            return;
+
+        }
+
+
+        // =================================================
+        // ALSO CHECK COMPLETED TEXT
+        // =================================================
+
+        if (
+            data.next_question ===
+            "Interview Completed"
+        ) {
+
+            finishInterview();
+
+            return;
+
+        }
+
+
+        // =================================================
+        // INCREMENT QUESTION NUMBER
+        // =================================================
+
+        questionNumber++;
+
+
+        // Safety protection
+        // Never display Question 16
+
+        if (
+            questionNumber > MAX_QUESTIONS
+        ) {
+
+            finishInterview();
+
+            return;
+
+        }
+
+
+        // =================================================
+        // GET NEXT QUESTION
+        // =================================================
+
+        currentQuestion =
+            data.next_question;
+
+
+        if (
+            !currentQuestion
+        ) {
+
+            finishInterview();
+
+            return;
+
+        }
+
+
+        // =================================================
+        // SHOW NEXT QUESTION
+        // =================================================
+
+        showQuestion();
+
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Something went wrong while submitting your answer."
+        );
+
+
+        // Re-enable button
+        // so candidate can try again
+
+        document.getElementById(
+            "submitBtn"
+        ).disabled = false;
+
+    }
+
+
+    document.getElementById(
+        "loading"
+    ).style.display = "none";
+
+
+    submitting = false;
+
+}
+
+
+// =========================================================
+// FINISH INTERVIEW
+// =========================================================
+
+function finishInterview() {
+
+
+    interviewCompleted = true;
+
+
+    submitting = false;
+
+
+    // -----------------------------------------------------
+    // Show completed message
+    // -----------------------------------------------------
+
+    document.getElementById(
+        "questionNumber"
+    ).innerText =
+        "Interview Complete";
+
+
+    document.getElementById(
+        "progressText"
+    ).innerText =
+        "15 / 15";
+
+    document.getElementById(
+        "progressText"
+    ).style.width = "100%";
+
+
+    document.getElementById(
+        "question"
+    ).innerText =
+        "Interview Completed";
+
+
+    // -----------------------------------------------------
+    // Hide answer area
+    // -----------------------------------------------------
+
+    document.getElementById(
+        "answer"
+    ).style.display =
+        "none";
+
+
+    // -----------------------------------------------------
+    // Hide submit button
+    // -----------------------------------------------------
+
+    document.getElementById(
+        "submitBtn"
+    ).style.display =
+        "none";
+
+
+    // -----------------------------------------------------
+    // Hide loading
+    // -----------------------------------------------------
+
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
+
+
+    // -----------------------------------------------------
+    // Show completed box
+    // -----------------------------------------------------
+
+    document.getElementById(
+        "complete"
+    ).style.display =
+        "block";
+
+}
+
+
+// =========================================================
+// VIEW REPORT
+// =========================================================
+
+function viewReport() {
+
+    window.location.href =
+        "/reports";
+
+}
+
+
+// =========================================================
+// START
+// =========================================================
+
+startInterview();
+
+
+</script>
+
+
+{% endblock %}
