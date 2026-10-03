@@ -57,16 +57,19 @@ uvicorn app:app --reload
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000). The health endpoint is
 available at [http://127.0.0.1:8000/healthz](http://127.0.0.1:8000/healthz).
 
-## Deploy from GitHub
+## Deploy from GitHub on Render
 
-The repository includes a Dockerfile for deploying the existing website on
-Railway. Connect this GitHub repository to a Railway service, add a MySQL
-service, and configure the database and application environment variables in
-Railway. Set the health check path to `/healthz` and generate a public HTTPS
-domain.
+The repository includes a Render Blueprint and Dockerfile for deploying the
+existing website on Render. The Blueprint creates the web service; the app
+continues to use the same FastAPI routes, templates, and CSS.
 
-Follow [DEPLOYMENT.md](DEPLOYMENT.md) for the complete Railway setup, required
-variables, database migration notes, and post-deployment checks.
+This app uses MySQL. Render does not provide a managed MySQL service, so create
+a MySQL database with an external provider and configure its connection
+variables in Render. Do not substitute Render Postgres without first migrating
+the application to PostgreSQL.
+
+Follow [DEPLOYMENT.md](DEPLOYMENT.md) for the Render setup, environment
+variables, database notes, and post-deployment checks.
 
 ## Configuration
 
@@ -74,6 +77,7 @@ Use `.env.example` as the list of supported environment variables. In
 particular, the application requires:
 
 - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME`
+- `DB_SSL_CA` is optional and enables verified MySQL TLS with a CA certificate
 - `SESSION_SECRET_KEY`
 - `GROQ_API_KEY` for AI-powered features
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, and `SMTP_FROM`

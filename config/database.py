@@ -11,6 +11,7 @@ DB_PORT = os.getenv("DB_PORT")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
+DB_SSL_CA = os.getenv("DB_SSL_CA")
 
 missing_variables = [
     name
@@ -26,7 +27,7 @@ missing_variables = [
 if missing_variables:
     raise RuntimeError(
         "Missing required database environment variables: "
-        f"{', '.join(missing_variables)}. Configure them in Railway Variables "
+        f"{', '.join(missing_variables)}. Configure them in the hosting service "
         "or in the local .env file."
     )
 
@@ -36,7 +37,15 @@ DATABASE_URL = (
     f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
-engine = create_engine(DATABASE_URL)
+connect_args = {}
+if DB_SSL_CA:
+    connect_args = {
+        "ssl_ca": DB_SSL_CA,
+        "ssl_verify_cert": True,
+        "ssl_verify_identity": True,
+    }
+
+engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
 SessionLocal = sessionmaker(bind=engine)
 

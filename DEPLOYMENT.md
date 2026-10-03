@@ -1,102 +1,99 @@
-# Deploy the existing website on Railway
+# Deploy the existing website on Render
 
-Railway is configured to run the existing FastAPI application. It serves the
-same Jinja templates and static CSS/JavaScript as the local website; it does
-not replace the website UI with Streamlit.
+Render builds the included Dockerfile and runs the existing FastAPI website
+with its Jinja templates, static CSS, and JavaScript. It does not replace the
+website UI with Streamlit.
 
-## 1. Publish the project to GitHub
+## 1. Prepare an external MySQL database
 
-Create a private GitHub repository and push the project. Keep `.env`, database
-exports, API keys, passwords, and other credentials out of GitHub. The existing
-`.gitignore` excludes `.env` and local `uploads/` and `reports/` files.
+This project uses MySQL. Render does not provide a managed MySQL database, so
+create one with a MySQL provider that permits connections from Render. For
+example, Aiven provides hosted MySQL; review its current plans and configure
+network access and TLS according to the provider's instructions.
 
-## 2. Create the Railway services
+Collect the database host, port, username, password, and database name. If you
+already have a MySQL database and want to keep its users and reports, use that
+database or migrate its data before directing users to the deployed site.
+Never commit database credentials or exports.
 
-1. Create a Railway project and deploy this GitHub repository as a service.
-   Railway detects the included `Dockerfile`, installs the listed dependencies,
-   and starts the existing FastAPI website.
-2. In the same Railway project, add a **MySQL** database service.
-3. In the web service's **Variables** page, add the variables below, using
-   Railway's reference picker to select the corresponding values from the
-   MySQL service:
+## 2. Deploy the GitHub repository
 
-   | Variable | Railway MySQL variable |
-   | --- | --- |
-   | `DB_HOST` | `MYSQLHOST` |
-   | `DB_PORT` | `MYSQLPORT` |
-   | `DB_USER` | `MYSQLUSER` |
-   | `DB_PASSWORD` | `MYSQLPASSWORD` |
-   | `DB_NAME` | `MYSQLDATABASE` |
+1. Sign in to the [Render Dashboard](https://dashboard.render.com/) using
+   GitHub, then select **New → Blueprint**.
+2. Connect the `parveen1234567/Interview-Gpt` repository and its `main` branch.
+   Render reads the root `render.yaml` Blueprint and builds the web service
+   from the included `Dockerfile`.
+3. Enter the database values and application secrets when Render prompts for
+   the Blueprint's unsynced environment variables. They are runtime settings;
+   do not add real values to `render.yaml` or GitHub.
+4. Deploy the Blueprint. The web service uses `/healthz` as its health check.
 
-   Reference format is `${{MySQL.MYSQLHOST}}`; replace `MySQL` with the exact
-   service name shown on your Railway canvas. Use the private service values;
-   do not expose the database publicly just to connect the web service.
+You can also create a **Web Service** directly from the repository and select
+**Docker** as the runtime. In that case, set the health check path to
+`/healthz` and enter the same environment variables below under the service's
+**Environment** settings.
 
-4. Add these application secrets as Railway service variables:
+## 3. Configure environment variables
 
-   | Variable | Value |
-   | --- | --- |
-   | `GROQ_API_KEY` | Your valid Groq API key |
-   | `SESSION_SECRET_KEY` | A fresh, long, randomly generated secret |
-   | `SESSION_COOKIE_SECURE` | `true` |
-   | `SMTP_HOST` | `smtp.gmail.com` |
-   | `SMTP_PORT` | `587` |
-   | `SMTP_USERNAME` | Your Gmail address |
-   | `SMTP_PASSWORD` | Your Google App Password |
-   | `SMTP_FROM` | Your sender Gmail address |
-   | `APP_BASE_URL` | The public HTTPS URL assigned to the web service |
+Set these required variables on the Render web service:
 
-   Generate a session secret locally with:
+| Variable | Value |
+| --- | --- |
+| `DB_HOST` | Hostname from your external MySQL provider |
+| `DB_PORT` | Port from your external MySQL provider |
+| `DB_USER` | MySQL username |
+| `DB_PASSWORD` | MySQL password |
+| `DB_NAME` | MySQL database name |
+| `GROQ_API_KEY` | Your Groq API key |
+| `SESSION_SECRET_KEY` | A fresh, long, randomly generated secret |
+| `SESSION_COOKIE_SECURE` | `true` |
 
-   ```powershell
-   python -c "import secrets; print(secrets.token_urlsafe(48))"
-   ```
+Generate a session secret locally with:
 
-   Enter the value directly in Railway Variables; never add it to this
-   repository. Set `APP_BASE_URL` after Railway generates the web domain.
-
-## 3. Prepare the database
-
-For a new, empty MySQL database, the application creates its tables at startup.
-For an existing database, confirm it already includes the columns from both
-migrations in `migrations/`. If not, apply the SQL migrations in date order
-before routing production traffic:
-
-1. `20261003_add_ats_scores.sql`
-2. `20261003_add_resume_feedback.sql`
-
-If you want to keep current accounts and reports, export the current database
-and import it into Railway MySQL before switching users to the deployed site.
-Do not share database dumps or credentials in chat.
-
-## 4. Deploy and check the website
-
-The included `Dockerfile` starts:
-
-```text
-uvicorn app:app --host 0.0.0.0 --port $PORT
+```powershell
+python -c "import secrets; print(secrets.token_urlsafe(48))"
 ```
 
-The Docker image uses Python 3.11 and installs dependencies from
-`requirements.txt`. In the Railway web service's **Settings → Deploy** section,
-set the health check path to `/healthz`.
+Keep it private and paste it directly into Render's environment settings.
+After Render assigns a public HTTPS URL, add `APP_BASE_URL` with that URL. To
+enable password-reset email, configure `SMTP_HOST`, `SMTP_PORT`,
+`SMTP_USERNAME`, `SMTP_PASSWORD`, and `SMTP_FROM` as well. These SMTP settings
+are optional for deployment, but email-based password reset needs them.
 
-After Railway reports a successful deployment:
+If the database provider requires a TLS certificate, follow its instructions
+for securely providing its CA certificate to the Render service. Set
+`DB_SSL_CA` to the certificate's mounted file path in Render. The app verifies
+the certificate and database hostname when this setting is present. Do not
+disable database TLS verification to work around connection errors.
 
-1. Generate a public domain under the web service's **Settings → Networking**.
-2. Put that HTTPS address in `APP_BASE_URL` and redeploy.
-3. Open the domain and verify the home page, static styles, login, resume upload,
-   ATS Score navigation page, interviews, report PDFs, and password-reset email.
-4. Confirm the browser address uses HTTPS. If stylesheet changes were recently
-   made, hard-refresh once so the browser fetches the updated static CSS.
+## 4. Check database schema and deploy
+
+For a new, empty MySQL database, the application creates its tables at startup.
+For an existing database, table creation does not add new columns. Review and
+apply relevant SQL files under `migrations/` before deploying, including the
+ATS score and resume feedback migrations if those columns are missing.
+
+Once Render shows the service as live:
+
+1. Open the service's **Settings** and create or copy its public `onrender.com`
+   URL. Add it as `APP_BASE_URL` and redeploy.
+2. Visit `/healthz` on the deployed URL and confirm it returns `{"status":"ok"}`.
+3. Check the homepage, static styles, login, resume upload, ATS Score page,
+   interviews, report PDFs, and password-reset email if SMTP is configured.
+4. If the CSS looks stale, hard-refresh the browser.
 
 ## Important
 
-- Railway hosting and database usage may incur charges. Review current Railway
+- Render hosting and external database usage may incur charges. Review current
   pricing and usage limits before deployment.
-- The application uses a database-backed session cookie signed by
-  `SESSION_SECRET_KEY`; keep that key private and stable between deploys.
-- Local uploaded files and generated PDFs are not durable application storage.
-  Reports are stored in MySQL and their PDFs can be generated again. Do not rely
-  on local container files surviving a redeploy.
+- Render's free web services can spin down when idle, so the next request may
+  take longer to respond. Free instances are intended for testing and hobby
+  projects, not production.
+- The application uses a signed session cookie. Keep `SESSION_SECRET_KEY`
+  private and stable between deploys; use `SESSION_COOKIE_SECURE=true` for
+  HTTPS.
+- Render's local filesystem is ephemeral. Do not rely on uploaded resumes or
+  generated PDFs remaining available after restarts or deploys. Reports stored
+  in MySQL can be used to regenerate PDFs. Arrange backups with your database
+  provider.
 - Set up MySQL backups before using the site with important user data.
