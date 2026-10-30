@@ -1,178 +1,205 @@
-# 🏫 Tulas International School Homepage Redesign
+# 🎤 Interview GPT
 
 <p align="center">
-  <strong>A modern, responsive, and visually engaging homepage redesign for Tulas International School (TIS), built using React, TypeScript, and Vite to enhance user experience, accessibility, and modern web standards.</strong>
+  <strong>An AI-powered Resume-Based Interview Preparation Platform that helps users analyze resume ATS scores, generate personalized interview questions, practice mock interviews, receive AI-driven feedback, and download detailed interview reports.</strong>
 </p>
 
 <p align="center">
-  <img alt="React" src="https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=black">
-  <img alt="TypeScript" src="https://img.shields.io/badge/Language-TypeScript-3178C6?logo=typescript&logoColor=white">
-  <img alt="Vite" src="https://img.shields.io/badge/Build-Vite-646CFF?logo=vite&logoColor=white">
-  <img alt="Responsive Design" src="https://img.shields.io/badge/UI-Responsive-success">
-  <img alt="Deployment" src="https://img.shields.io/badge/Deployment-Vercel-black">
+  <img alt="Python" src="https://img.shields.io/badge/Language-Python-3776AB?logo=python&logoColor=white">
+  <img alt="FastAPI" src="https://img.shields.io/badge/Framework-FastAPI-009688?logo=fastapi&logoColor=white">
+  <img alt="MySQL" src="https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white">
+  <img alt="SQLAlchemy" src="https://img.shields.io/badge/ORM-SQLAlchemy-red">
+  <img alt="Groq" src="https://img.shields.io/badge/AI-Groq-orange">
+  <img alt="Deployment" src="https://img.shields.io/badge/Deployment-Render-46E3B7">
 </p>
 
 <p align="center">
-  <a href="https://tulas-international-school-homepage-redesign-71peu785x.vercel.app/">🌐 Live Demo</a> •
-  <a href="https://github.com/parveen1234567/Tulas-International-School-Homepage-Redesign">💻 Source Code</a>
+  <a href="YOUR_RENDER_DEPLOY_LINK">🌐 Live Demo</a> •
+  <a href="https://github.com/parveen1234567/Interview-Gpt">💻 Source Code</a>
 </p>
 
 ---
 
 # 🚀 Project Overview
 
-The Tulas International School Homepage Redesign is a modern frontend project focused on enhancing the digital presence of an educational institution through a responsive, interactive, and visually appealing homepage.
+Interview GPT is a resume-based AI interview preparation platform designed to help job seekers improve their interview performance through personalized practice sessions and resume analysis.
 
-The redesign improves navigation, accessibility, responsiveness, and user engagement while maintaining a professional design suitable for students, parents, and prospective applicants.
+The application leverages Artificial Intelligence to analyze candidate resumes, generate role-specific interview questions, evaluate responses, provide actionable feedback, and generate downloadable performance reports.
 
-The project demonstrates modern frontend development practices using React, TypeScript, and Vite.
+Rather than practicing generic interview questions, users receive questions tailored to their actual resume, skills, and experience.
 
 ---
 
 # 💡 Problem Statement
 
-Traditional educational websites often face challenges such as:
+Many job seekers face challenges such as:
 
-- Outdated user interfaces
-- Poor mobile responsiveness
-- Inefficient navigation
-- Limited accessibility
-- Lack of modern user engagement features
+- Lack of interview preparation
+- Generic mock interview resources
+- Poor understanding of ATS optimization
+- Limited access to personalized feedback
+- Difficulty identifying resume weaknesses
 
-This redesign addresses these issues by creating a clean, responsive, and user-friendly homepage experience.
+This project solves these challenges by creating an intelligent interview preparation platform that combines ATS evaluation and AI-powered interview coaching.
 
 ---
 
-# 🎯 Project Goals
+# 🎯 Product Value
 
-The redesign aims to:
+Interview GPT provides practical career support for students, freshers, and professionals.
 
-- Improve the school's online presence
-- Create a modern and professional interface
-- Enhance user experience
-- Improve navigation across devices
-- Implement accessibility-friendly interactions
-- Demonstrate modern React development practices
+### For Students
+
+- Practice technical and HR interviews
+- Improve communication skills
+- Understand ATS requirements
+- Increase placement readiness
+
+### For Job Seekers
+
+- Receive personalized interview questions
+- Get AI-generated feedback
+- Improve resume quality
+- Track interview performance
+
+### For Recruiters & Trainers
+
+- Assess candidate readiness
+- Review performance reports
+- Identify skill gaps
 
 ---
 
 # ✨ Core Features
 
-## 📱 Fully Responsive Design
+## 👤 User Authentication
 
-Optimized for:
+Supports:
 
-- Desktop
-- Tablet
-- Mobile Devices
+- Account Registration
+- User Login
+- Password Recovery
+- Profile Management
 
-Ensures a consistent user experience across all screen sizes.
-
----
-
-## 🧭 Responsive Navigation Menu
-
-- Desktop navigation
-- Mobile hamburger menu
-- Smooth menu interactions
-- Improved accessibility
+Ensures secure access to interview data and reports.
 
 ---
 
-## 🌙 Light / Dark Theme Toggle
+## 📄 Resume Upload
 
-Users can switch between:
+Users can upload resumes for:
 
-```text
-☀ Light Mode
-
-🌙 Dark Mode
-```
-
-Theme preference is automatically saved for future visits.
+- ATS analysis
+- Skill extraction
+- Interview question generation
+- Resume evaluation
 
 ---
 
-## 📊 Scroll Progress Indicator
+## 🎯 Resume-Based Interview Questions
 
-Provides users with visual feedback showing:
+The platform generates personalized questions based on:
 
-- Current page progress
-- Scroll position
-- Improved navigation awareness
+- Skills
+- Projects
+- Technologies
+- Experience
+- Education
 
----
-
-## ✨ Scroll Reveal Animations
-
-Content sections smoothly appear as users scroll, creating:
-
-- Enhanced engagement
-- Modern visual experience
-- Smooth page transitions
+This creates realistic interview experiences.
 
 ---
 
-## 🖱 Custom Pointer Effects
+## 📊 ATS Resume Score Analysis
 
-On supported devices:
+Provides:
 
-- Interactive cursor effects
-- Dynamic user feedback
-- Modern UI enhancement
+- ATS compatibility score
+- Resume improvement recommendations
+- Optimization suggestions
+- Keyword enhancement guidance
 
 ---
 
-## ♿ Accessibility Support
+## 🤖 AI-Powered Feedback
+
+After each interview:
+
+- Performance evaluation
+- Strength analysis
+- Improvement recommendations
+- Detailed feedback generation
+
+---
+
+## 📑 Downloadable Reports
+
+Users can download:
+
+- Interview assessments
+- Feedback reports
+- Performance summaries
+
+---
+
+## 🔒 Secure Session Management
 
 Includes:
 
-- Reduced Motion Support
-- Keyboard Friendly Navigation
-- Responsive Components
-- Accessibility Considerations
+- Session-based authentication
+- Secure user accounts
+- Environment-based secret management
 
 ---
 
 # 🏗️ System Architecture
 
-## Frontend Architecture
+## High-Level Architecture
 
 ```text
 User
  │
  ▼
-React Application
+FastAPI Web Application
  │
- ├── Navigation
- ├── Hero Section
- ├── Content Sections
- ├── Theme Manager
- ├── Scroll Effects
- └── Responsive Layout
+ ├── Authentication Module
+ ├── Resume Processing
+ ├── ATS Evaluation
+ ├── Interview Engine
+ ├── Feedback Generator
+ └── Report Management
  │
  ▼
-Optimized User Experience
+MySQL Database
+ │
+ ▼
+Groq AI Services
 ```
 
 ---
 
-## User Interaction Flow
+## Interview Workflow
 
 ```text
-Visitor Lands On Homepage
-            │
-            ▼
-Explore Content
-            │
-            ▼
-Navigate Sections
-            │
-            ▼
-Switch Theme
-            │
-            ▼
-View School Information
+User Registration
+        │
+        ▼
+Resume Upload
+        │
+        ▼
+Resume Analysis
+        │
+        ▼
+Question Generation
+        │
+        ▼
+Interview Practice
+        │
+        ▼
+AI Feedback
+        │
+        ▼
+Download Report
 ```
 
 ---
@@ -180,35 +207,41 @@ View School Information
 # 📂 Project Structure
 
 ```text
-Tulas-International-School-Homepage-Redesign/
+Interview-GPT/
 │
-├── public/
-│   └── Static Assets
+├── app.py
+│   └── FastAPI application entry point
 │
-├── src/
-│   │
-│   ├── components/
-│   │   ├── Navbar
-│   │   ├── Hero
-│   │   ├── Sections
-│   │   └── Footer
-│   │
-│   ├── hooks/
-│   │   └── Custom React Hooks
-│   │
-│   ├── styles/
-│   │   └── Global Styling
-│   │
-│   ├── assets/
-│   │   └── Images & Icons
-│   │
-│   ├── App.tsx
-│   └── main.tsx
+├── templates/
+│   ├── login.html
+│   ├── register.html
+│   ├── dashboard.html
+│   ├── ats_score.html
+│   └── interview.html
 │
-├── index.html
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
+├── static/
+│   ├── css/
+│   ├── javascript/
+│   └── assets/
+│
+├── database/
+│   ├── models.py
+│   ├── connection.py
+│   └── schema.py
+│
+├── migrations/
+│   └── Database migration scripts
+│
+├── uploads/
+│   └── Uploaded resumes
+│
+├── reports/
+│   └── Generated PDF reports
+│
+├── .env.example
+├── requirements.txt
+├── Dockerfile
+├── render.yaml
 └── README.md
 ```
 
@@ -216,100 +249,203 @@ Tulas-International-School-Homepage-Redesign/
 
 # 🧰 Technology Stack
 
+## Backend
+
+| Technology | Purpose |
+|------------|----------|
+| Python 3.11 | Core Development |
+| FastAPI | Web Framework |
+| Uvicorn | ASGI Server |
+| SQLAlchemy | ORM |
+| PyMySQL | Database Connectivity |
+
+---
+
+## Artificial Intelligence
+
+| Technology | Purpose |
+|------------|----------|
+| Groq API | AI Resume Analysis |
+| Groq API | Question Generation |
+| Groq API | Feedback Generation |
+
+---
+
 ## Frontend
 
 | Technology | Purpose |
 |------------|----------|
-| React | User Interface Development |
-| TypeScript | Type-Safe JavaScript |
-| Vite | Fast Development & Build Tool |
-| CSS3 | Styling & Responsiveness |
+| HTML5 | Structure |
+| CSS3 | Styling |
+| JavaScript | Interactivity |
+| Jinja2 Templates | Dynamic Rendering |
 
 ---
 
-## Development Tools
+## Database
 
 | Technology | Purpose |
 |------------|----------|
-| npm | Package Management |
-| Git | Version Control |
-| GitHub | Repository Hosting |
-| Vercel | Deployment Platform |
+| MySQL | Data Storage |
+| SQLAlchemy | Database Models |
 
 ---
 
 # 🔄 Application Workflow
 
-## Step 1: Application Load
+## Step 1: User Authentication
 
 ```text
-User Opens Website
+Register / Login
 ```
 
 ---
 
-## Step 2: Render Homepage
+## Step 2: Resume Upload
 
 ```text
-React Components Load
+Upload Resume
 ```
 
 ---
 
-## Step 3: User Interaction
+## Step 3: ATS Evaluation
 
-Users can:
-
-- Navigate sections
-- Toggle themes
-- Scroll through content
-- Access school information
+```text
+Resume Analysis
+      │
+      ▼
+ATS Score Generation
+```
 
 ---
 
-## Step 4: Enhanced User Experience
+## Step 4: Interview Preparation
 
-Features such as:
+```text
+Skill Extraction
+       │
+       ▼
+Question Generation
+```
 
-- Reveal animations
-- Progress indicator
-- Responsive navigation
+---
 
-improve engagement.
+## Step 5: Mock Interview
+
+```text
+Question
+   │
+   ▼
+User Response
+   │
+   ▼
+AI Evaluation
+```
+
+---
+
+## Step 6: Feedback Report
+
+```text
+Interview Summary
+       │
+       ▼
+Download PDF Report
+```
 
 ---
 
 # 🚀 Running the Project
 
+## Create Virtual Environment
+
+```powershell
+py -3.11 -m venv .venv
+```
+
+---
+
+## Activate Environment
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+---
+
 ## Install Dependencies
 
-```bash
-npm install
+```powershell
+pip install -r requirements.txt
 ```
 
 ---
 
-## Start Development Server
+## Run Application
 
-```bash
-npm run dev
+```powershell
+uvicorn app:app --reload
 ```
 
 ---
 
-## Production Build
+## Open Website
 
-```bash
-npm run build
+```text
+http://127.0.0.1:8000
 ```
 
 ---
 
-## Preview Production Build
+## Health Endpoint
 
-```bash
-npm run preview
+```text
+http://127.0.0.1:8000/healthz
 ```
+
+---
+
+# 🔒 Configuration
+
+Required environment variables:
+
+```env
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+
+SESSION_SECRET_KEY=
+
+GROQ_API_KEY=
+
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USERNAME=
+SMTP_PASSWORD=
+SMTP_FROM=
+
+APP_BASE_URL=
+```
+
+Never commit real API keys, passwords, or database credentials.
+
+---
+
+# 🗄️ Database Design
+
+Major Data Modules:
+
+- Users
+- User Profiles
+- Uploaded Resumes
+- ATS Reports
+- Interview Questions
+- Interview Sessions
+- Feedback Reports
+- Downloadable PDFs
 
 ---
 
@@ -317,11 +453,11 @@ npm run preview
 
 ## Live Application
 
-🌐 https://tulas-international-school-homepage-redesign-71peu785x.vercel.app/
+🌐 YOUR_RENDER_DEPLOY_LINK
 
 ## Hosting Platform
 
-Vercel
+Render
 
 ## Deployment Architecture
 
@@ -329,56 +465,82 @@ Vercel
 GitHub Repository
         │
         ▼
-      Vercel
+      Render
         │
         ▼
-Tulas International School
- Homepage Redesign
+ FastAPI Application
+        │
+ ┌──────┴──────┐
+ ▼             ▼
+MySQL       Groq API
+Database      AI
 ```
 
-The application is deployed on Vercel, providing fast global content delivery and optimized frontend performance.
+The application is deployed using Render and integrates with an external MySQL database and Groq AI services.
+
+---
+
+# 🧪 Testing & Validation
+
+Application testing includes:
+
+✅ Resume Upload Validation
+
+✅ User Authentication
+
+✅ ATS Score Generation
+
+✅ AI Question Generation
+
+✅ Interview Practice Workflow
+
+✅ Report Downloads
+
+✅ Database Connectivity
+
+✅ Password Recovery
 
 ---
 
 # 🧩 Challenges Faced
 
-## Responsive Design
+## Resume Parsing
 
-Ensuring a seamless experience across different devices and screen sizes.
+Extracting meaningful information from different resume formats.
 
 ### Learning
 
-Modern responsive layouts improve accessibility and user engagement.
+Resume structures vary significantly and require robust parsing logic.
 
 ---
 
-## Theme Persistence
+## AI Question Generation
 
-Maintaining user-selected themes after page refresh.
+Generating relevant questions from user resumes.
 
 ### Learning
 
-Local storage can effectively enhance user experience.
+Context-aware prompting improves question quality.
 
 ---
 
-## Scroll-Based Animations
+## ATS Scoring Logic
 
-Creating smooth animations without impacting performance.
+Providing realistic ATS improvement suggestions.
 
 ### Learning
 
-Efficient animation techniques improve visual appeal without sacrificing usability.
+Resume optimization requires balancing keywords and readability.
 
 ---
 
-## Accessibility Considerations
+## Secure Authentication
 
-Supporting users with motion sensitivity and varying interaction preferences.
+Managing user sessions and account security.
 
 ### Learning
 
-Accessibility should be an integral part of design rather than an afterthought.
+Authentication is a critical part of production-ready applications.
 
 ---
 
@@ -386,58 +548,58 @@ Accessibility should be an integral part of design rather than an afterthought.
 
 Future versions could include:
 
-- 🎓 Admissions Portal
-- 📰 News & Events Section
-- 📅 Academic Calendar
-- 📸 Media Gallery
-- 📍 Interactive Campus Map
-- 🗣 Student Testimonials
-- 📱 Progressive Web App (PWA)
-- 🌐 Multi-language Support
-- 🤖 AI-based School Assistant
-- 📞 Online Inquiry Forms
+- 🎙️ AI Voice Interviews
+- 📹 Video Interview Analysis
+- 📊 Skill Gap Analytics
+- 🤖 Multiple AI Interviewers
+- 🌍 Multi-Language Support
+- 📱 Mobile Application
+- 📅 Interview Scheduling
+- 🏢 Company-Specific Interview Kits
+- 📈 Candidate Progress Dashboard
+- 📄 Resume Builder Integration
 
 ---
 
 # 📚 What I Learned
 
-During this project I gained practical experience in:
+This project helped me gain practical experience in:
 
-- React Development
-- TypeScript Fundamentals
-- Component-Based Architecture
-- Responsive Web Design
-- Theme Management
-- User Experience Design
-- Accessibility Best Practices
-- Modern Frontend Deployment
-- Vite Tooling
-- Performance Optimization
+- FastAPI Development
+- Database Design
+- MySQL Integration
+- SQLAlchemy ORM
+- Resume Analysis
+- Prompt Engineering
+- AI-Powered Applications
+- Authentication Systems
+- Report Generation
+- Full-Stack Deployment
 
 ---
 
 # 🎯 Why This Project?
 
-This project demonstrates how modern frontend technologies can be used to transform traditional educational websites into engaging digital experiences.
+Interview GPT demonstrates how Artificial Intelligence can help job seekers improve their interview skills through personalized practice, resume optimization, and data-driven feedback.
 
-The redesign focuses on usability, accessibility, responsiveness, and modern design principles while maintaining a professional institutional appearance.
+Instead of relying on generic interview preparation, users receive customized guidance based on their actual resume and career profile.
 
-> **Modern Design. Better Accessibility. Enhanced School Experience.**
+> **Analyze. Practice. Improve. Get Interview Ready.**
 
 ---
 
 # 📌 Project Highlights
 
-- ✅ React + TypeScript Project
-- ✅ Responsive Design
-- ✅ Mobile Navigation
-- ✅ Dark / Light Theme
-- ✅ Persistent User Preferences
-- ✅ Scroll Progress Indicator
-- ✅ Scroll Reveal Animations
-- ✅ Accessibility Support
-- ✅ Vercel Deployment
-- ✅ Recruiter-Friendly Frontend Project
+- ✅ AI-Powered Interview Platform
+- ✅ Resume-Based Questions
+- ✅ ATS Score Analysis
+- ✅ Personalized Feedback
+- ✅ Downloadable Reports
+- ✅ FastAPI Backend
+- ✅ MySQL Database
+- ✅ Groq AI Integration
+- ✅ Authentication System
+- ✅ Render Deployment Ready
 
 ---
 
@@ -445,8 +607,8 @@ The redesign focuses on usability, accessibility, responsiveness, and modern des
 
 | Resource | Link |
 |-----------|------|
-| 🌐 Live Application | https://tulas-international-school-homepage-redesign-71peu785x.vercel.app/ |
-| 💻 GitHub Repository | https://github.com/parveen1234567/Tulas-International-School-Homepage-Redesign |
+| 🌐 Live Application | YOUR_RENDER_DEPLOY_LINK |
+| 💻 GitHub Repository | https://github.com/parveen1234567/Interview-Gpt |
 | 👨‍💻 GitHub Profile | https://github.com/parveen1234567 |
 | 💼 LinkedIn | https://linkedin.com/in/shaik-chinthapalli-parveen-983668257 |
 
@@ -454,8 +616,8 @@ The redesign focuses on usability, accessibility, responsiveness, and modern des
 
 # 🙌 Final Note
 
-The Tulas International School Homepage Redesign represents my experience in building modern, responsive, and accessible web interfaces using React and TypeScript.
+Interview GPT represents my exploration of AI-powered career preparation tools, combining resume analysis, ATS optimization, personalized interview practice, and performance evaluation into one platform.
 
-This project demonstrates how thoughtful design, responsive layouts, and interactive features can significantly improve the digital experience for educational institutions and their users.
+This project demonstrates how modern AI technologies can be integrated into real-world applications that help users prepare effectively for job opportunities and improve their professional growth.
 
-> **Tulas International School Homepage Redesign — Inspiring Education Through Modern Web Experiences.**
+> **Interview GPT — Practice Smarter. Interview Better. Get Hired.**
