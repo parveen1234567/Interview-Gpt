@@ -1,99 +1,461 @@
-# Interview GPT
+# 🏫 Tulas International School Homepage Redesign
 
-Interview GPT is a resume-based interview practice website. It helps users
-review their resume's ATS score, practice personalized interview questions, and
-review feedback and downloadable reports.
+<p align="center">
+  <strong>A modern, responsive, and visually engaging homepage redesign for Tulas International School (TIS), built using React, TypeScript, and Vite to enhance user experience, accessibility, and modern web standards.</strong>
+</p>
 
-The project is a FastAPI website rendered with Jinja templates and static CSS
-and JavaScript. Deployment serves the same website UI; it is not a Streamlit
-application.
+<p align="center">
+  <img alt="React" src="https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=black">
+  <img alt="TypeScript" src="https://img.shields.io/badge/Language-TypeScript-3178C6?logo=typescript&logoColor=white">
+  <img alt="Vite" src="https://img.shields.io/badge/Build-Vite-646CFF?logo=vite&logoColor=white">
+  <img alt="Responsive Design" src="https://img.shields.io/badge/UI-Responsive-success">
+  <img alt="Deployment" src="https://img.shields.io/badge/Deployment-Vercel-black">
+</p>
 
-## Features
+<p align="center">
+  <a href="https://tulas-international-school-homepage-redesign-71peu785x.vercel.app/">🌐 Live Demo</a> •
+  <a href="https://github.com/parveen1234567/Tulas-International-School-Homepage-Redesign">💻 Source Code</a>
+</p>
 
-- Account registration, sign-in, password recovery, and profile management
-- Resume upload and resume-based interview question generation
-- Interview practice and feedback reports
-- Separate Resume ATS Score page with practical improvement suggestions
-- Downloadable interview reports
+---
 
-## Technology
+# 🚀 Project Overview
 
-- Python 3.11
-- FastAPI and Uvicorn
-- Jinja2 templates and static CSS/JavaScript
-- MySQL with SQLAlchemy and PyMySQL
-- Groq API for AI-powered resume and interview features
+The Tulas International School Homepage Redesign is a modern frontend project focused on enhancing the digital presence of an educational institution through a responsive, interactive, and visually appealing homepage.
 
-## Run locally on Windows
+The redesign improves navigation, accessibility, responsiveness, and user engagement while maintaining a professional design suitable for students, parents, and prospective applicants.
 
-### Requirements
+The project demonstrates modern frontend development practices using React, TypeScript, and Vite.
 
-- Python 3.11
-- MySQL
-- A Groq API key for AI-powered features
+---
 
-### Setup
+# 💡 Problem Statement
 
-Open PowerShell in the project directory and run:
+Traditional educational websites often face challenges such as:
 
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-Copy-Item .env.example .env
+- Outdated user interfaces
+- Poor mobile responsiveness
+- Inefficient navigation
+- Limited accessibility
+- Lack of modern user engagement features
+
+This redesign addresses these issues by creating a clean, responsive, and user-friendly homepage experience.
+
+---
+
+# 🎯 Project Goals
+
+The redesign aims to:
+
+- Improve the school's online presence
+- Create a modern and professional interface
+- Enhance user experience
+- Improve navigation across devices
+- Implement accessibility-friendly interactions
+- Demonstrate modern React development practices
+
+---
+
+# ✨ Core Features
+
+## 📱 Fully Responsive Design
+
+Optimized for:
+
+- Desktop
+- Tablet
+- Mobile Devices
+
+Ensures a consistent user experience across all screen sizes.
+
+---
+
+## 🧭 Responsive Navigation Menu
+
+- Desktop navigation
+- Mobile hamburger menu
+- Smooth menu interactions
+- Improved accessibility
+
+---
+
+## 🌙 Light / Dark Theme Toggle
+
+Users can switch between:
+
+```text
+☀ Light Mode
+
+🌙 Dark Mode
 ```
 
-Edit `.env` and provide your MySQL connection settings, Groq API key, and a
-long, random `SESSION_SECRET_KEY`. Configure SMTP settings if you want email
-password recovery to work. Keep `.env` private; it is excluded from Git.
+Theme preference is automatically saved for future visits.
 
-Start the website:
+---
 
-```powershell
-uvicorn app:app --reload
+## 📊 Scroll Progress Indicator
+
+Provides users with visual feedback showing:
+
+- Current page progress
+- Scroll position
+- Improved navigation awareness
+
+---
+
+## ✨ Scroll Reveal Animations
+
+Content sections smoothly appear as users scroll, creating:
+
+- Enhanced engagement
+- Modern visual experience
+- Smooth page transitions
+
+---
+
+## 🖱 Custom Pointer Effects
+
+On supported devices:
+
+- Interactive cursor effects
+- Dynamic user feedback
+- Modern UI enhancement
+
+---
+
+## ♿ Accessibility Support
+
+Includes:
+
+- Reduced Motion Support
+- Keyboard Friendly Navigation
+- Responsive Components
+- Accessibility Considerations
+
+---
+
+# 🏗️ System Architecture
+
+## Frontend Architecture
+
+```text
+User
+ │
+ ▼
+React Application
+ │
+ ├── Navigation
+ ├── Hero Section
+ ├── Content Sections
+ ├── Theme Manager
+ ├── Scroll Effects
+ └── Responsive Layout
+ │
+ ▼
+Optimized User Experience
 ```
 
-Open [http://127.0.0.1:8000](http://127.0.0.1:8000). The health endpoint is
-available at [http://127.0.0.1:8000/healthz](http://127.0.0.1:8000/healthz).
+---
 
-## Deploy from GitHub on Render
+## User Interaction Flow
 
-The repository includes a Render Blueprint and Dockerfile for deploying the
-existing website on Render. The Blueprint creates the web service; the app
-continues to use the same FastAPI routes, templates, and CSS.
+```text
+Visitor Lands On Homepage
+            │
+            ▼
+Explore Content
+            │
+            ▼
+Navigate Sections
+            │
+            ▼
+Switch Theme
+            │
+            ▼
+View School Information
+```
 
-This app uses MySQL. Render does not provide a managed MySQL service, so create
-a MySQL database with an external provider and configure its connection
-variables in Render. Do not substitute Render Postgres without first migrating
-the application to PostgreSQL.
+---
 
-Follow [DEPLOYMENT.md](DEPLOYMENT.md) for the Render setup, environment
-variables, database notes, and post-deployment checks.
+# 📂 Project Structure
 
-## Configuration
+```text
+Tulas-International-School-Homepage-Redesign/
+│
+├── public/
+│   └── Static Assets
+│
+├── src/
+│   │
+│   ├── components/
+│   │   ├── Navbar
+│   │   ├── Hero
+│   │   ├── Sections
+│   │   └── Footer
+│   │
+│   ├── hooks/
+│   │   └── Custom React Hooks
+│   │
+│   ├── styles/
+│   │   └── Global Styling
+│   │
+│   ├── assets/
+│   │   └── Images & Icons
+│   │
+│   ├── App.tsx
+│   └── main.tsx
+│
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
 
-Use `.env.example` as the list of supported environment variables. In
-particular, the application requires:
+---
 
-- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME`
-- `DB_SSL_CA` is optional and enables verified MySQL TLS with a CA certificate
-- `SESSION_SECRET_KEY`
-- `GROQ_API_KEY` for AI-powered features
-- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, and `SMTP_FROM`
-  for password-recovery email
-- `SESSION_COOKIE_SECURE=true` when serving the site over HTTPS
-- `APP_BASE_URL` set to the public site URL for deployment
+# 🧰 Technology Stack
 
-Never commit real API keys, passwords, session secrets, or database exports.
+## Frontend
 
-## Database notes
+| Technology | Purpose |
+|------------|----------|
+| React | User Interface Development |
+| TypeScript | Type-Safe JavaScript |
+| Vite | Fast Development & Build Tool |
+| CSS3 | Styling & Responsiveness |
 
-The application creates missing tables when it starts. If you are updating an
-existing database, table creation does not add new columns; review and apply
-the relevant SQL files under [`migrations/`](migrations/) before deploying.
-Back up important data before applying schema changes.
+---
 
-Uploaded files and generated PDFs are stored on the local filesystem. Do not
-assume they persist across hosted redeployments; interview data and reports
-stored in MySQL are separate from those local files.
+## Development Tools
+
+| Technology | Purpose |
+|------------|----------|
+| npm | Package Management |
+| Git | Version Control |
+| GitHub | Repository Hosting |
+| Vercel | Deployment Platform |
+
+---
+
+# 🔄 Application Workflow
+
+## Step 1: Application Load
+
+```text
+User Opens Website
+```
+
+---
+
+## Step 2: Render Homepage
+
+```text
+React Components Load
+```
+
+---
+
+## Step 3: User Interaction
+
+Users can:
+
+- Navigate sections
+- Toggle themes
+- Scroll through content
+- Access school information
+
+---
+
+## Step 4: Enhanced User Experience
+
+Features such as:
+
+- Reveal animations
+- Progress indicator
+- Responsive navigation
+
+improve engagement.
+
+---
+
+# 🚀 Running the Project
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## Start Development Server
+
+```bash
+npm run dev
+```
+
+---
+
+## Production Build
+
+```bash
+npm run build
+```
+
+---
+
+## Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+# 🚀 Deployment
+
+## Live Application
+
+🌐 https://tulas-international-school-homepage-redesign-71peu785x.vercel.app/
+
+## Hosting Platform
+
+Vercel
+
+## Deployment Architecture
+
+```text
+GitHub Repository
+        │
+        ▼
+      Vercel
+        │
+        ▼
+Tulas International School
+ Homepage Redesign
+```
+
+The application is deployed on Vercel, providing fast global content delivery and optimized frontend performance.
+
+---
+
+# 🧩 Challenges Faced
+
+## Responsive Design
+
+Ensuring a seamless experience across different devices and screen sizes.
+
+### Learning
+
+Modern responsive layouts improve accessibility and user engagement.
+
+---
+
+## Theme Persistence
+
+Maintaining user-selected themes after page refresh.
+
+### Learning
+
+Local storage can effectively enhance user experience.
+
+---
+
+## Scroll-Based Animations
+
+Creating smooth animations without impacting performance.
+
+### Learning
+
+Efficient animation techniques improve visual appeal without sacrificing usability.
+
+---
+
+## Accessibility Considerations
+
+Supporting users with motion sensitivity and varying interaction preferences.
+
+### Learning
+
+Accessibility should be an integral part of design rather than an afterthought.
+
+---
+
+# 📈 Future Enhancements
+
+Future versions could include:
+
+- 🎓 Admissions Portal
+- 📰 News & Events Section
+- 📅 Academic Calendar
+- 📸 Media Gallery
+- 📍 Interactive Campus Map
+- 🗣 Student Testimonials
+- 📱 Progressive Web App (PWA)
+- 🌐 Multi-language Support
+- 🤖 AI-based School Assistant
+- 📞 Online Inquiry Forms
+
+---
+
+# 📚 What I Learned
+
+During this project I gained practical experience in:
+
+- React Development
+- TypeScript Fundamentals
+- Component-Based Architecture
+- Responsive Web Design
+- Theme Management
+- User Experience Design
+- Accessibility Best Practices
+- Modern Frontend Deployment
+- Vite Tooling
+- Performance Optimization
+
+---
+
+# 🎯 Why This Project?
+
+This project demonstrates how modern frontend technologies can be used to transform traditional educational websites into engaging digital experiences.
+
+The redesign focuses on usability, accessibility, responsiveness, and modern design principles while maintaining a professional institutional appearance.
+
+> **Modern Design. Better Accessibility. Enhanced School Experience.**
+
+---
+
+# 📌 Project Highlights
+
+- ✅ React + TypeScript Project
+- ✅ Responsive Design
+- ✅ Mobile Navigation
+- ✅ Dark / Light Theme
+- ✅ Persistent User Preferences
+- ✅ Scroll Progress Indicator
+- ✅ Scroll Reveal Animations
+- ✅ Accessibility Support
+- ✅ Vercel Deployment
+- ✅ Recruiter-Friendly Frontend Project
+
+---
+
+# 🔗 Links
+
+| Resource | Link |
+|-----------|------|
+| 🌐 Live Application | https://tulas-international-school-homepage-redesign-71peu785x.vercel.app/ |
+| 💻 GitHub Repository | https://github.com/parveen1234567/Tulas-International-School-Homepage-Redesign |
+| 👨‍💻 GitHub Profile | https://github.com/parveen1234567 |
+| 💼 LinkedIn | https://linkedin.com/in/shaik-chinthapalli-parveen-983668257 |
+
+---
+
+# 🙌 Final Note
+
+The Tulas International School Homepage Redesign represents my experience in building modern, responsive, and accessible web interfaces using React and TypeScript.
+
+This project demonstrates how thoughtful design, responsive layouts, and interactive features can significantly improve the digital experience for educational institutions and their users.
+
+> **Tulas International School Homepage Redesign — Inspiring Education Through Modern Web Experiences.**
