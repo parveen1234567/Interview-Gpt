@@ -14,7 +14,6 @@
 </p>
 
 <p align="center">
-  <a href="YOUR_RENDER_DEPLOY_LINK">🌐 Live Demo</a> •
   <a href="https://github.com/parveen1234567/Interview-Gpt">💻 Source Code</a>
 </p>
 
@@ -607,7 +606,6 @@ Instead of relying on generic interview preparation, users receive customized gu
 
 | Resource | Link |
 |-----------|------|
-| 🌐 Live Application | YOUR_RENDER_DEPLOY_LINK |
 | 💻 GitHub Repository | https://github.com/parveen1234567/Interview-Gpt |
 | 👨‍💻 GitHub Profile | https://github.com/parveen1234567 |
 | 💼 LinkedIn | https://linkedin.com/in/shaik-chinthapalli-parveen-983668257 |
